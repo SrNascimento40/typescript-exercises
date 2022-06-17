@@ -46,7 +46,7 @@ function form() {
     function handleUpdateUser(event) {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
-            const { inputName, inputUserName, inputEmail, inputAddress } = htmlSelectors();
+            const { inputName, inputUserName, inputEmail, inputAddress, inputAddressComplement, typePhone, inputZip, inputCity, inputCompanyName, typeURL } = htmlSelectors();
             const saveUser = yield updateUser({
                 id: 1,
                 name: inputName.value,
@@ -54,19 +54,28 @@ function form() {
                 email: inputEmail.value,
                 address: {
                     street: inputAddress.value,
-                    suite: inputAddress.value,
-                    city: inputAddress.value,
-                    zipcode: inputAddress.value,
+                    suite: inputAddressComplement.value,
+                    city: inputCity.value,
+                    zipcode: inputZip.value,
                 },
-                phone: inputAddress.value,
-                website: inputAddress.value,
+                phone: typePhone.value,
+                website: typeURL.value,
                 company: {
-                    name: inputAddress.value,
+                    name: inputCompanyName.value,
                 },
             });
             if (saveUser === null || saveUser === void 0 ? void 0 : saveUser.id) {
                 inputUserName.value = "";
                 inputName.value = "";
+                inputEmail.value = "";
+                inputAddress.value = "";
+                inputAddressComplement.value = "";
+                typePhone.value = "";
+                inputZip.value = "";
+                inputCity.value = "";
+                inputCompanyName.value = "";
+                typeURL.value = "";
+                alert("Dados enviados com sucesso!");
             }
         });
     }
@@ -84,11 +93,20 @@ function form() {
     function logRandomUser(event) {
         return __awaiter(this, void 0, void 0, function* () {
             event.preventDefault();
-            const firstUser = yield getUser(2);
+            const firstUser = yield getUser(10);
             const allSelectors = htmlSelectors();
             if (!firstUser)
                 return;
             allSelectors.inputName.value = firstUser.name;
+            allSelectors.inputUserName.value = firstUser.username;
+            allSelectors.inputEmail.value = firstUser.email;
+            allSelectors.typePhone.value = firstUser.phone;
+            allSelectors.inputAddress.value = firstUser.address.street;
+            allSelectors.inputAddressComplement.value = firstUser.address.suite;
+            allSelectors.inputZip.value = firstUser.address.zipcode;
+            allSelectors.inputCity.value = firstUser.address.city;
+            allSelectors.inputCompanyName.value = firstUser.company.name;
+            allSelectors.typeURL.value = firstUser.website;
         });
     }
     function setupButtonHandlers() {
